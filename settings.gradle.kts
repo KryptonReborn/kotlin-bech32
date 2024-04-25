@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "beck32"
+rootProject.name = "bech32"
 
 include(":library")
