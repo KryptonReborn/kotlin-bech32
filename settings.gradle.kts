@@ -14,5 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmp-template"
+rootProject.name = "bech32"
+
 include(":library")
