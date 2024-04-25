@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "kmp.template"
+    namespace = "dev.kryptonreborn.bech32"
 }
 
 kotlin {
@@ -11,8 +11,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlinStdLib)
-                implementation(libs.kotlinSerializationJson)
-                implementation(libs.kotlinSerializationCbor)
+                implementation(libs.kotlinxIo)
             }
         }
     }

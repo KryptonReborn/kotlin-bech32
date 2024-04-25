@@ -14,5 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kmp-template"
+rootProject.name = "beck32"
+
 include(":library")
