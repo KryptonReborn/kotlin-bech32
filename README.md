@@ -17,6 +17,12 @@
 ![badge-support-apple-silicon]  
 ![badge-support-js-ir]
 
+### Publish
+1. Update the version in 'library/build.gradle.kts'
+2. Update file 'CHANGELOG.md'
+3. Create branch 'release/vX.X.X'
+4. Push the branch to trigger the CI/CD
+
 <!-- TAG_VERSION -->  
 [badge-latest-release]: https://img.shields.io/badge/latest--release-0.0.1-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
