@@ -17,6 +17,8 @@ kotlinxIo = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "k
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+mavenPublish = { id = "maven-publish", version = "unspecified" }
 
 # Plugins defined by this project
 commonMppLib = { id = "common.mpp.lib", version = "unspecified" }
+commonMppPublish = { id = "common.mpp.publish", version = "unspecified" }

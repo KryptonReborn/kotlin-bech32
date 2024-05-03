@@ -1,5 +1,12 @@
 plugins {
     id(libs.plugins.commonMppLib.get().pluginId)
+    id(libs.plugins.commonMppPublish.get().pluginId)
+}
+
+publishConfig {
+    url = "https://maven.pkg.github.com/KryptonReborn/kotlin-bech32"
+    groupId = "kotlin-bech32"
+    artifactId = "library"
 }
 
 android {
