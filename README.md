@@ -29,10 +29,10 @@ Add the following repository to your settings.gradle.kts file
 ```kotlin
 repositories {
     maven {
-        url = uri("https://maven.pkg.github.com/KryptoReborn/[library name]")
+        url = uri("https://maven.pkg.github.com/KryptonReborn/kotlin-bech32")
         credentials {
-            username = "[your username]"
-            password = "[your personal access token]"
+            username = "user name"
+            password = "personal access token"
         }
     }
 }
@@ -42,7 +42,7 @@ Add the following dependency to your build.gradle.kts file
 
 ```build.gradle.kts
 dependencies {
-    implementation("[library name]:[library version]")
+    implementation("kotlin-bech32:[library name]:[library version]")
 }
 ```
 
