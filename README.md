@@ -1,6 +1,7 @@
-# KMP TEMPLATE
-[![GitHub release](https://img.shields.io/badge/release-v0.0.2-blue.svg)](https://github.com/KryptonReborn/kmp-template/releases/tag/v0.0.2) [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.23-B125EA?logo=kotlin)](https://kotlinlang.org)
-[![Build Status](https://github.com/saschpe/kase64/workflows/Main/badge.svg)](https://github.com/KryptonReborn/kmp-template/actions)
+# KOTLIN BECH32
+
+[![GitHub release](https://img.shields.io/badge/release-v0.0.1-blue.svg)](https://github.com/KryptonReborn/kotlin-bech32/releases/tag/v0.0.1) [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.23-B125EA?logo=kotlin)](https://kotlinlang.org)
+[![Build Status](https://github.com/saschpe/kase64/workflows/Main/badge.svg)](https://github.com/KryptonReborn/kotlin-bech32/actions)
 [![License](http://img.shields.io/:License-Apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ![badge-android](http://img.shields.io/badge/Platform-Android-brightgreen.svg?logo=android)
@@ -18,9 +19,13 @@
 This is the template for initializing a repo based on Kotlin Multiplarform
 
 ## Download
-You must use a personal access token (classic) with the appropriate scopes to publish and install packages in [GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages#authenticating-to-github-packages).
+
+You must use a personal access token (classic) with the appropriate scopes to publish and install
+packages
+in [GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages#authenticating-to-github-packages).
 
 Add the following repository to your settings.gradle.kts file
+
 ```kotlin
 repositories {
     maven {
@@ -32,9 +37,15 @@ repositories {
     }
 }
 ```
+
 Add the following dependency to your build.gradle.kts file
+
 ```build.gradle.kts
 dependencies {
     implementation("[library name]:[library version]")
 }
 ```
+
+## Acknowledgements
+
+This library is inspired by [repo](url) by [user](url).
