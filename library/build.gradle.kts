@@ -10,8 +10,8 @@ plugins {
 
 publishConfig {
     url = "https://maven.pkg.github.com/KryptonReborn/kotlin-bech32"
-    groupId = "kotlin-bech32"
-    artifactId = "library"
+    groupId = "kryptonreborn"
+    artifactId = "bech32"
 }
 
 version = "0.0.2"
