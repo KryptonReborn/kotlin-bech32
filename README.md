@@ -42,7 +42,7 @@ Add the following dependency to your build.gradle.kts file
 
 ```build.gradle.kts
 dependencies {
-    implementation("kotlin-bech32:[library name]:[library version]")
+    implementation("dev.kryptonreborn.bech32:bech32:[version]")
 }
 ```
 
