@@ -14,7 +14,7 @@ publishConfig {
     artifactId = "bech32"
 }
 
-version = "0.0.2"
+version = "0.1.0"
 
 android {
     namespace = "dev.kryptonreborn.bech32"
