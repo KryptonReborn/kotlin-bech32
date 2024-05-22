@@ -5,5 +5,5 @@ package dev.kryptonreborn.bech32
  */
 enum class Bech32Encoding(val checksum: Int) {
     BECH32(1),
-    BECH32M(0x2bc830a3)
+    BECH32M(0x2bc830a3),
 }
