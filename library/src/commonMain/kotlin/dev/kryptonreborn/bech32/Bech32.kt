@@ -15,21 +15,22 @@ open class Bech32 {
     /**
      * The Bech32 character set for encoding.
      */
-    private val CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
+    private val charset = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
     /**
      * The Bech32 character set for decoding.
      */
-    private val CHARSET_REV = byteArrayOf(
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-        15, -1, 10, 17, 21, 20, 26, 30, 7, 5, -1, -1, -1, -1, -1, -1,
-        -1, 29, -1, 24, 13, 25, 9, 8, 23, -1, 18, 22, 31, 27, 19, -1,
-        1, 0, 3, 16, 11, 28, 12, 14, 6, 4, 2, -1, -1, -1, -1, -1,
-        -1, 29, -1, 24, 13, 25, 9, 8, 23, -1, 18, 22, 31, 27, 19, -1,
-        1, 0, 3, 16, 11, 28, 12, 14, 6, 4, 2, -1, -1, -1, -1, -1
-    )
+    private val charsetRev =
+        byteArrayOf(
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+            15, -1, 10, 17, 21, 20, 26, 30, 7, 5, -1, -1, -1, -1, -1, -1,
+            -1, 29, -1, 24, 13, 25, 9, 8, 23, -1, 18, 22, 31, 27, 19, -1,
+            1, 0, 3, 16, 11, 28, 12, 14, 6, 4, 2, -1, -1, -1, -1, -1,
+            -1, 29, -1, 24, 13, 25, 9, 8, 23, -1, 18, 22, 31, 27, 19, -1,
+            1, 0, 3, 16, 11, 28, 12, 14, 6, 4, 2, -1, -1, -1, -1, -1,
+        )
 
     /**
      * Encode a byte array to a Bech32 string
@@ -40,7 +41,11 @@ open class Bech32 {
      *
      * @return A Bech32 string
      */
-    fun encodeBytes(encoding: Bech32Encoding, hrp: String, bytes: ByteArray): String {
+    fun encodeBytes(
+        encoding: Bech32Encoding,
+        hrp: String,
+        bytes: ByteArray,
+    ): String {
         return encode(encoding, hrp, convertBits(bytes, fromBits = 8, toBits = 5, pad = true))
     }
 
@@ -64,21 +69,26 @@ open class Bech32 {
      *
      * @return A string containing the Bech32-encoded data
      */
-    fun encode(encoding: Bech32Encoding, hrp: String, values: ByteArray): String {
+    fun encode(
+        encoding: Bech32Encoding,
+        hrp: String,
+        values: ByteArray,
+    ): String {
         require(hrp.isNotEmpty()) { "human-readable part is too short: " + hrp.length }
         require(hrp.length <= 83) { "human-readable part is too long: " + hrp.length }
 
         val lcHrp = hrp.lowercase()
         val checksum = createChecksum(encoding, lcHrp, values)
-        val combined = ByteArray(values.size + checksum.size).apply {
-            values.copyInto(this)
-            checksum.copyInto(this, values.size)
-        }
+        val combined =
+            ByteArray(values.size + checksum.size).apply {
+                values.copyInto(this)
+                checksum.copyInto(this, values.size)
+            }
         return buildString(lcHrp.length + 1 + combined.size) {
             append(lcHrp)
             append(1)
             for (b in combined) {
-                append(CHARSET[b.toInt()])
+                append(charset[b.toInt()])
             }
         }
     }
@@ -117,8 +127,8 @@ open class Bech32 {
         val values = ByteArray(dataPartLength)
         for (i in 0 until dataPartLength) {
             val c = str[i + pos + 1]
-            if (CHARSET_REV[c.code].toInt() == -1) throw Bech32Exception("Invalid character '$c' at position ${i + pos + 1}")
-            values[i] = CHARSET_REV[c.code]
+            if (charsetRev[c.code].toInt() == -1) throw Bech32Exception("Invalid character '$c' at position ${i + pos + 1}")
+            values[i] = charsetRev[c.code]
         }
         val hrp = str.substring(0, pos).lowercase()
         val encoding = verifyChecksum(hrp, values) ?: throw Bech32Exception("Checksum does not validate")
@@ -134,7 +144,11 @@ open class Bech32 {
      *
      * @return Decoded value as byte array (8-bits per byte)
      */
-    fun decodeBytes(bech32: String, expectedHrp: String, expectedEncoding: Bech32Encoding): ByteArray {
+    fun decodeBytes(
+        bech32: String,
+        expectedHrp: String,
+        expectedEncoding: Bech32Encoding,
+    ): ByteArray {
         val decoded = decode(bech32)
         if (decoded.hrp != expectedHrp || decoded.encoding !== expectedEncoding) {
             throw Bech32Exception("Unexpected hrp or encoding")
@@ -143,12 +157,17 @@ open class Bech32 {
     }
 
     /** Create a checksum.  */
-    private fun createChecksum(encoding: Bech32Encoding, hrp: String, values: ByteArray): ByteArray {
+    private fun createChecksum(
+        encoding: Bech32Encoding,
+        hrp: String,
+        values: ByteArray,
+    ): ByteArray {
         val hrpExpanded = expandHrp(hrp)
-        val enc = ByteArray(hrpExpanded.size + values.size + 6).apply {
-            hrpExpanded.copyInto(this)
-            values.copyInto(this, hrpExpanded.size)
-        }
+        val enc =
+            ByteArray(hrpExpanded.size + values.size + 6).apply {
+                hrpExpanded.copyInto(this)
+                values.copyInto(this, hrpExpanded.size)
+            }
         val mod = polymod(enc) xor encoding.checksum
         val ret = ByteArray(6)
         for (i in 0..5) {
@@ -158,12 +177,16 @@ open class Bech32 {
     }
 
     /** Verify a checksum.  */
-    private fun verifyChecksum(hrp: String, values: ByteArray): Bech32Encoding? {
+    private fun verifyChecksum(
+        hrp: String,
+        values: ByteArray,
+    ): Bech32Encoding? {
         val hrpExpanded = expandHrp(hrp)
-        val combined = ByteArray(hrpExpanded.size + values.size).apply {
-            hrpExpanded.copyInto(this)
-            values.copyInto(this, hrpExpanded.size)
-        }
+        val combined =
+            ByteArray(hrpExpanded.size + values.size).apply {
+                hrpExpanded.copyInto(this)
+                values.copyInto(this, hrpExpanded.size)
+            }
         return when (polymod(combined)) {
             Bech32Encoding.BECH32.checksum -> Bech32Encoding.BECH32
             Bech32Encoding.BECH32M.checksum -> Bech32Encoding.BECH32M
@@ -187,9 +210,9 @@ open class Bech32 {
     /** Find the polynomial with value coefficients mod the generator as 30-bit.  */
     private fun polymod(values: ByteArray): Int {
         var c = 1
-        for (v_i in values) {
+        for (value in values) {
             val c0 = (c ushr 25) and 0xff
-            c = ((c and 0x1ffffff) shl 5) xor (v_i.toInt() and 0xff)
+            c = ((c and 0x1ffffff) shl 5) xor (value.toInt() and 0xff)
             if ((c0 and 1) != 0) c = c xor 0x3b6a57b2
             if ((c0 and 2) != 0) c = c xor 0x26508e6d
             if ((c0 and 4) != 0) c = c xor 0x1ea119fa
@@ -214,13 +237,13 @@ open class Bech32 {
         var bits = 0
         val out = Buffer()
         val maxv = (1 shl toBits) - 1
-        val max_acc = (1 shl (fromBits + toBits - 1)) - 1
+        val maxAcc = (1 shl (fromBits + toBits - 1)) - 1
         for (i in 0 until inLen) {
             val value = `in`[i + inStart].toInt() and 0xff
             if ((value ushr fromBits) != 0) {
                 throw Bech32Exception("Input value '$value' exceeds '$fromBits' bit size")
             }
-            acc = ((acc shl fromBits) or value) and max_acc
+            acc = ((acc shl fromBits) or value) and maxAcc
             bits += fromBits
             while (bits >= toBits) {
                 bits -= toBits
